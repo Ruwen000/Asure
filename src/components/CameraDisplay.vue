@@ -1,15 +1,22 @@
 <template>
     <div class='ui container'>
+
         <video v-if="!imageData.image" ref="video" class="camera-stream" />
+
         <img v-else :src="imageData.image" class="camera-stream">
-        <div class='ui divider'></div>
+
         <div class="icon-group">
             <button class="capture" @click="captureImage">Take Picture</button>
-            <button class="clear" @click="clear_images">X</button>
+            
+            <button class="clear" @click="clear_images">Lösche ALLES</button>
         </div>
-        <div class="gallery_box">
-            <img style="background-color: azure;" v-for="(imageData, index) in imageList" :key="index" :src="imageData.image" class="gallery_image" />
+        <div class="GalleryBox">
+            <div v-for="(imageData, index) in imageList" :key="index" class="PictureBox">
+            <img   :src="imageData.image" class="gallery_image" />
+            <button class="cleareinzelneBilder" @click="clear_image(index)">X</button> 
         </div>
+        </div>
+        
 
     </div>
 </template>
@@ -60,9 +67,12 @@ export default {
 
         clear_images() {
 
-            console.log("CKJSFHOKSLNBV")
             this.imageList = [];
         },
+        clear_image(i){
+            this.imageList.splice(i,1);
+            console.log(i);
+        }
     },
     mounted() {
 
@@ -102,21 +112,37 @@ export default {
         text-align: center;
     }
     .clear {
+        background-color: rgb(211, 80, 40);
+        border-width: 0px;
+        border-radius: 3px;
+        width:  100px;
+        height: 20px;
+        text-align: center;
+    }
+    .GalleryBox{
+        display: flex;
+        flex-wrap: wrap;
+    }
+    .PictureBox {
+        width: 30%;
+        display: flex;
+        flex-wrap: wrap;
+        margin: 1.5%;
+
+    }
+    .gallery_image {
+        width: 100%;
+
+    }
+    .cleareinzelneBilder{
+        position: absolute;
         background-color: red;
         border-width: 0px;
         border-radius: 3px;
         width: 20px;
         height: 20px;
         text-align: center;
+        margin-left: 21%;
+        margin-top: 15%;
     }
-    .gallery_box {
-        width: 100%;
-        display: flex;
-        flex-wrap: wrap;
-    }
-    .gallery_image {
-        width: 30%;
-        margin: 1.5%;
-    }
-
 </style>
