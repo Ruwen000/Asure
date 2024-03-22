@@ -8,12 +8,14 @@
         <div class="icon-group">
             <button class="capture" @click="captureImage">Take Picture</button>
             
-            <button class="clear" @click="clear_images">Lösche ALLES</button>
+            <button class="clear" @click="clear_images"></button>
         </div>
+        <br>
+        <hr>
         <div class="GalleryBox">
             <div v-for="(imageData, index) in imageList" :key="index" class="PictureBox">
             <img   :src="imageData.image" class="gallery_image" />
-            <button class="cleareinzelneBilder" @click="clear_image(index)">X</button> 
+            <button class="clearEinzelneBilder" @click="clear_image(index)">X</button> 
         </div>
         </div>
         
@@ -102,23 +104,28 @@ export default {
     }
     .camera-stream {
         width: 100%;
+        max-width: 800px;
         /* width: 100%; */
     }
     .capture {
         border-width: 0px;
         border-radius: 2px;
         width: 110px;
-        height: 20px;
+        height: 40px;
         text-align: center;
     }
     .clear {
-        background-color: rgb(211, 80, 40);
         border-width: 0px;
-        border-radius: 3px;
-        width:  100px;
-        height: 20px;
+        width:  40px;
+        height: 40px;
         text-align: center;
+        background-image: url(/Delete.png);
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: cover;
+        border-radius: 20px;
     }
+
     .GalleryBox{
         display: flex;
         flex-wrap: wrap;
@@ -134,7 +141,7 @@ export default {
         width: 100%;
 
     }
-    .cleareinzelneBilder{
+    .clearEinzelneBilder{
         position: absolute;
         background-color: red;
         border-width: 0px;
@@ -142,7 +149,5 @@ export default {
         width: 20px;
         height: 20px;
         text-align: center;
-        margin-left: 21%;
-        margin-top: 15%;
     }
 </style>

@@ -1,5 +1,6 @@
 <template>
   <header><h1>My Photo Gallery</h1></header>
+  <hr>
   <CameraDisplay />
 </template>
 
