@@ -6,24 +6,31 @@
         <div class="icon-group">   
             <div  class="camera-icon" @click="captureImage">
                 <i class="big camera icon" ></i>
-                <p>Take Picture</p>
+                <button>Take Picture</button>
             </div>
             <div class='camera-icon' @click="rotateImage">
                 <i class="big redo alternate icon"></i>
-                <p>Rotate</p> 
+                <button>Rotate</button> 
             </div>
             <div  class='camera-icon' @click="uploadImage">
                 <i class="big thumbs up outline icon"></i>
-                <p>Done</p> 
+                <button>Done</button> 
             </div>
             <div class="camera-icon" @click="cancelImage">
                 <i class="big cancel icon"></i>
-                <p>Cancel</p>
+                <button>Cancel</button>
             </div>
         </div>
-    
-        <img v-if="!imageData.image" class="camera-stream" src="../../src/assets/image.png">
-        <img v-else :src="imageData.image" class="camera-stream" />
+        <div>
+            <!-- Iterate over each image object in imageList -->
+            <img v-for="(imageData, index) in imageList" :key="index" :src="imageData.image" class="camera-stream" />
+        </div>
+
+        <!--
+            <img v-if="!imageData.image" class="camera-stream" src="../../src/assets/image.png">
+            <img v-else :src="imageData.image" class="camera-stream" />
+        -->
+
     </div>
 
 
@@ -41,6 +48,9 @@ export default {
         return {
             defaultImage: '../../src/assets/image.png',
             mediaStream: null,
+
+            imageList: [],     // Array to hold multiple images 
+
             imageData: {
                 image: '',
                 image_orientation: 0,
@@ -48,20 +58,30 @@ export default {
         }
     },
     methods: {
+
         captureImage() {
+            
+            console.log("Taking Image")
             const mediaStreamTrack = this.mediaStream.getVideoTracks()[0]
             const imageCapture = new window.ImageCapture(mediaStreamTrack)
             let reader = new FileReader();
             return imageCapture.takePhoto().then(blob => {
+
                 reader.readAsDataURL(blob)
                 reader.onload = () => {
-                    this.imageData.image = reader.result;
+                    this.imageList.push({
+                        image: reader.result,
+                        image_orientation: 0,
+                    })
+                    // this.imageData.image = reader.result;
                 }
             })  
         },
+
         rotateImage() {
             this.imageData.image_orientation = this.imageData.image_orientation + 90; 
         },
+
         cancelImage() {
             this.imageData.image = null;
             this.showCameraModal = true;
@@ -72,6 +92,7 @@ export default {
                     this.mediaStream = mediaStream                   
             }) 
         },
+
         uploadImage() {
             axios({ method: "POST", "url": API_IMAGE_ENDPOINT, "data": this.imageData})
                     .then(response => {
