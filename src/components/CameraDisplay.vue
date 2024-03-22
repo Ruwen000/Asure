@@ -4,10 +4,8 @@
         <img v-else :src="imageData.image" class="camera-stream">
         <div class='ui divider'></div>
         <div class="icon-group">
-            <div  class="camera-icon" @click="captureImage">
-                <i class="big camera icon" ></i>
-                <button>Take Picture</button>
-            </div>
+            <button class="capture" @click="captureImage">Take Picture</button>
+            <button class="clear" @click="clear_images">X</button>
         </div>
         <div class="gallery_box">
             <img style="background-color: azure;" v-for="(imageData, index) in imageList" :key="index" :src="imageData.image" class="gallery_image" />
@@ -60,6 +58,11 @@ export default {
             })
         },
 
+        clear_images() {
+
+            console.log("CKJSFHOKSLNBV")
+            this.imageList = [];
+        },
     },
     mounted() {
 
@@ -74,9 +77,9 @@ export default {
 </script>
 
 <style>
-.ui {
-    width: 100%;
-}
+    .ui {
+        width: 100%;
+    }
     .icon-group {
         display: flex;
         flex-direction: row;
@@ -90,6 +93,21 @@ export default {
     .camera-stream {
         width: 100%;
         /* width: 100%; */
+    }
+    .capture {
+        border-width: 0px;
+        border-radius: 2px;
+        width: 110px;
+        height: 20px;
+        text-align: center;
+    }
+    .clear {
+        background-color: red;
+        border-width: 0px;
+        border-radius: 3px;
+        width: 20px;
+        height: 20px;
+        text-align: center;
     }
     .gallery_box {
         width: 100%;
