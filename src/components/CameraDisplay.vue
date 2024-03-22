@@ -3,15 +3,14 @@
         <video v-if="!imageData.image" ref="video" class="camera-stream" />
         <img v-else :src="imageData.image" class="camera-stream">
         <div class='ui divider'></div>
-        <div class="icon-group">   
+        <div class="icon-group">
             <div  class="camera-icon" @click="captureImage">
                 <i class="big camera icon" ></i>
                 <button>Take Picture</button>
             </div>
         </div>
-        <div>
-            <!-- Iterate over each image object in imageList -->
-            <img v-for="(imageData, index) in imageList" :key="index" :src="imageData.image" class="camera-stream" />
+        <div class="gallery_box">
+            <img style="background-color: azure;" v-for="(imageData, index) in imageList" :key="index" :src="imageData.image" class="gallery_image" />
         </div>
 
     </div>
@@ -20,12 +19,12 @@
 <script>
 
 export default {
-    
+
     data() {
         return {
             defaultImage: '../../src/assets/image.png',
             mediaStream: null,
-            imageList: [],     // Array to hold multiple images 
+            imageList: [],     // Array to hold multiple images
             imageData: {
                 image: ``,
             },
@@ -35,7 +34,7 @@ export default {
     methods: {
 
         captureImage() {
-            
+
             const mediaStreamTrack = this.mediaStream.getVideoTracks()[0]
             const imageCapture = new window.ImageCapture(mediaStreamTrack)
             let reader = new FileReader();
@@ -47,7 +46,7 @@ export default {
                         image: reader.result,
                     })
                 }
-            })  
+            })
         },
 
         cancelImage() {
@@ -57,29 +56,31 @@ export default {
             .then(mediaStream => {
                     this.$refs.video.srcObject = mediaStream;
                     this.$refs.video.play()
-                    this.mediaStream = mediaStream                   
-            }) 
+                    this.mediaStream = mediaStream
+            })
         },
 
     },
     mounted() {
-        
+
         navigator.mediaDevices.getUserMedia({video: true})
             .then(mediaStream => {
                     this.$refs.video.srcObject = mediaStream;
                     this.$refs.video.play()
-                    this.mediaStream = mediaStream                   
-            })   
+                    this.mediaStream = mediaStream
+            })
     },
 }
 </script>
 
 <style>
+.ui {
+    width: 100%;
+}
     .icon-group {
         display: flex;
         flex-direction: row;
         justify-content: space-evenly;
-        margin: 12px auto;
     }
     .camera-icon {
         width: 15%;
@@ -87,8 +88,17 @@ export default {
         margin: auto;
     }
     .camera-stream {
-        margin: 120px 170px;
-        width: 50%;
+        width: 100%;
+        /* width: 100%; */
     }
-     
+    .gallery_box {
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+    }
+    .gallery_image {
+        width: 30%;
+        margin: 1.5%;
+    }
+
 </style>
