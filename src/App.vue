@@ -1,16 +1,27 @@
-<script setup>
-</script>
-
 <template>
-  <header>
-    <h2>Hello World</h2>
-  </header>
-
-  <main>
-    
-  </main>
+  <div id="app">
+    <CameraDisplay />
+  </div>
 </template>
 
-<style scoped>
+<script>
+import CameraDisplay from "./components/CameraDisplay.vue";
 
+export default {
+  name: 'app',
+  components: {
+    CameraDisplay
+  }
+}
+</script>
+
+<style>
+#app {
+  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
+  margin-top: 60px;
+}
 </style>
