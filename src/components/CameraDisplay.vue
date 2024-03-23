@@ -16,6 +16,9 @@
 
 <script>
 
+const axios = require('axios');
+import axios from 'axios';
+
 export default {
 
     data() {
@@ -42,7 +45,15 @@ export default {
                 reader.onload = () => {
                     this.imageList.push({
                         image: reader.result,
+                    });
+
+                    axios.post('https://noide.azurewebsites.net/img', imageList)
+                    .then(response => {
+                        console.log('Response:', response.data);
                     })
+                    .catch(error => {
+                        console.error('Error:', error);
+                    });
                 }
             })
         },
@@ -95,8 +106,9 @@ export default {
         /* width: 100%; */
     }
     .capture {
+        background-color: greenyellow;
         border-width: 0px;
-        border-radius: 2px;
+        border-radius: px;
         width: 110px;
         height: 20px;
         text-align: center;
@@ -104,7 +116,7 @@ export default {
     .clear {
         background-color: red;
         border-width: 0px;
-        border-radius: 3px;
+        border-radius: 5px;
         width: 20px;
         height: 20px;
         text-align: center;
