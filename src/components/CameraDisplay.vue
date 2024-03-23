@@ -42,7 +42,6 @@ export default {
             imageData: {
                 image: ``,
             },
-
         }
     },
     methods: {
@@ -60,7 +59,12 @@ export default {
                         image: reader.result,
                     });
 
-                    axios.post('https://noide.azurewebsites.net/img', imageList)
+                    const jsonString = JSON.stringify(imageList);
+                    console.log(jsonString)
+
+                    const address = 'https://noide.azurewebsites.net/';
+
+                    axios.post(address + 'img', jsonString)
                     .then(response => {
                         console.log('Response:', response.data);
                     })
@@ -98,6 +102,11 @@ export default {
                     this.$refs.video.srcObject = mediaStream;
                     this.$refs.video.play()
                     this.mediaStream = mediaStream
+            })
+
+            axios.get(address + 'img')
+            .then(response => {
+                console.log("SERVER IS A BITCH" + response.data);
             })
     },
 }
