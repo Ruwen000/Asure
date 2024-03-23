@@ -41,6 +41,7 @@ export default {
             imageData: {
                 image: ``,
             },
+            address: 'https://noide.azurewebsites.net/',
         }
     },
     methods: {
@@ -58,12 +59,10 @@ export default {
                         image: reader.result,
                     });
 
-                    const jsonString = JSON.stringify(imageList);
+                    const jsonString = JSON.stringify(this.imageList);
                     console.log(jsonString)
 
-                    const address = 'https://noide.azurewebsites.net/';
-
-                    axios.post(address + 'img', jsonString)
+                    axios.post(this.address + 'img', jsonString)
                     .then(response => {
                         console.log('Response:', response.data);
                     })
@@ -104,7 +103,7 @@ export default {
             })
 
             console.log("testing Server");
-            axios.get(address + 'img')
+            axios.get(this.address + 'img')
             .then(response => {
                 console.log("SERVER IS A BITCH" + response.data);
             })
