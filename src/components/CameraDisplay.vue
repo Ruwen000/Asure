@@ -104,6 +104,7 @@ export default {
                     this.mediaStream = mediaStream
             })
 
+            console.log("testing Server");
             axios.get(address + 'img')
             .then(response => {
                 console.log("SERVER IS A BITCH" + response.data);
