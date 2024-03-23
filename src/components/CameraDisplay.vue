@@ -1,9 +1,13 @@
 <template>
     <div class='ui container'>
 
-        <video v-if="!imageData.image" ref="video" class="camera-stream" />
+        <div class="VideoBox">
+            <video v-if="!imageData.image" ref="video" class="camera-stream" />
 
-        <img v-else :src="imageData.image" class="camera-stream">
+            <img v-else :src="imageData.image" class="camera-stream">
+        </div>
+
+        
 
         <div class="icon-group">
             <button class="capture" @click="captureImage">Take Picture</button>
@@ -91,6 +95,10 @@ export default {
 <style>
     .ui {
         width: 100%;
+    }
+    .VideoBox{
+        display: flex;
+        justify-content: center;
     }
     .icon-group {
         display: flex;
