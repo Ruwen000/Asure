@@ -8,7 +8,7 @@
         </div>
 
         
-
+<br/>
         <div class="icon-group">
             <button class="capture" @click="captureImage">Take Picture</button>
             
@@ -41,7 +41,8 @@ export default {
             imageData: {
                 image: ``,
             },
-            address: 'https://noide.azurewebsites.net/',
+            //address: 'https://noide.azurewebsites.net:3000/',
+            address: 'http://localhost:3000/',
         }
     },
     methods: {
@@ -59,10 +60,14 @@ export default {
                         image: reader.result,
                     });
 
-                    const jsonString = JSON.stringify(this.imageList);
-                    console.log(jsonString)
+                    const formData = new FormData();
+                    formData.append('image', blob)
 
-                    axios.post(this.address + 'img', jsonString)
+                    return axios.post(this.address + 'upload', formData, {
+                        headers: {
+                            'Content-Type': 'multipart/form-data'
+                    }
+                    })
                     .then(response => {
                         console.log('Response:', response.data);
                     })
@@ -103,10 +108,10 @@ export default {
             })
 
             console.log("testing Server");
-            axios.get(this.address + 'img')
-            .then(response => {
-                console.log("SERVER IS A BITCH" + response.data);
-            })
+            // axios.get(this.address + 'img')
+            // .then(response => {
+            //     console.log(response.data);
+            // })
     },
 }
 </script>
@@ -156,7 +161,9 @@ export default {
 
     .GalleryBox{
         display: flex;
-        flex-wrap: wrap;
+        flex-wrap: wrap-reverse;
+        flex-direction: row-reverse;
+        
     }
     .PictureBox {
         width: 30%;
