@@ -1,15 +1,28 @@
 <template>
     <div class='ui container'>
-        <video v-if="!imageData.image" ref="video" class="camera-stream" />
-        <img v-else :src="imageData.image" class="camera-stream">
-        <div class='ui divider'></div>
+
+        <div class="VideoBox">
+            <video v-if="!imageData.image" ref="video" class="camera-stream" />
+
+            <img v-else :src="imageData.image" class="camera-stream">
+        </div>
+
+        
+
         <div class="icon-group">
             <button class="capture" @click="captureImage">Take Picture</button>
-            <button class="clear" @click="clear_images">X</button>
+            
+            <button class="clear" @click="clear_images"></button>
         </div>
-        <div class="gallery_box">
-            <img style="background-color: azure;" v-for="(imageData, index) in imageList" :key="index" :src="imageData.image" class="gallery_image" />
+        <br>
+        <hr>
+        <div class="GalleryBox">
+            <div v-for="(imageData, index) in imageList" :key="index" class="PictureBox">
+            <img   :src="imageData.image" class="gallery_image" />
+            <button class="clearEinzelneBilder" @click="clear_image(index)">X</button> 
         </div>
+        </div>
+        
 
     </div>
 </template>
@@ -71,9 +84,12 @@ export default {
 
         clear_images() {
 
-            console.log("CKJSFHOKSLNBV")
             this.imageList = [];
         },
+        clear_image(i){
+            this.imageList.splice(i,1);
+            console.log(i);
+        }
     },
     mounted() {
 
@@ -91,6 +107,10 @@ export default {
     .ui {
         width: 100%;
     }
+    .VideoBox{
+        display: flex;
+        justify-content: center;
+    }
     .icon-group {
         display: flex;
         flex-direction: row;
@@ -103,6 +123,7 @@ export default {
     }
     .camera-stream {
         width: 100%;
+        max-width: 800px;
         /* width: 100%; */
     }
     .capture {
@@ -110,10 +131,38 @@ export default {
         border-width: 0px;
         border-radius: px;
         width: 110px;
-        height: 20px;
+        height: 40px;
         text-align: center;
     }
     .clear {
+        border-width: 0px;
+        width:  40px;
+        height: 40px;
+        text-align: center;
+        background-image: url(/Delete.png);
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: cover;
+        border-radius: 20px;
+    }
+
+    .GalleryBox{
+        display: flex;
+        flex-wrap: wrap;
+    }
+    .PictureBox {
+        width: 30%;
+        display: flex;
+        flex-wrap: wrap;
+        margin: 1.5%;
+
+    }
+    .gallery_image {
+        width: 100%;
+
+    }
+    .clearEinzelneBilder{
+        position: absolute;
         background-color: red;
         border-width: 0px;
         border-radius: 5px;
@@ -121,14 +170,4 @@ export default {
         height: 20px;
         text-align: center;
     }
-    .gallery_box {
-        width: 100%;
-        display: flex;
-        flex-wrap: wrap;
-    }
-    .gallery_image {
-        width: 30%;
-        margin: 1.5%;
-    }
-
 </style>

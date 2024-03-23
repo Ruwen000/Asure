@@ -1,4 +1,6 @@
 <template>
+  <header><h1>My Photo Gallery</h1></header>
+  <hr>
   <CameraDisplay />
 </template>
 
@@ -14,4 +16,9 @@ export default {
 </script>
 
 <style>
+header h1{
+  font-size: 2em;
+  text-align: center;
+  color: aquamarine;
+}
 </style>
